@@ -4,6 +4,10 @@ import Pie from './components/Pie'
 import RutaProtegida from './components/RutaProtegida'
 import NoEncontrada from './pages/NoEncontrada'
 import ListadoVacantes from './pages/ListadoVacantes'
+import DetalleVacante from './pages/DetalleVacante'
+import Login from './pages/Login'
+import RegistroCandidato from './pages/RegistroCandidato'
+import MisSolicitudes from './pages/MisSolicitudes'
 
 // TEMPORAL (Paso 3): marcador para las páginas que se construyen en los Pasos 4 y 5.
 function EnConstruccion({ titulo }) {
@@ -23,14 +27,14 @@ export default function App() {
         <Routes>
           {/* Públicas */}
           <Route path="/" element={<ListadoVacantes />} />
-          <Route path="/vacantes/:id" element={<EnConstruccion titulo="Detalle de vacante" />} />
-          <Route path="/login" element={<EnConstruccion titulo="Iniciar sesión" />} />
-          <Route path="/registro" element={<EnConstruccion titulo="Crear cuenta de candidato" />} />
+          <Route path="/vacantes/:id" element={<DetalleVacante />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/registro" element={<RegistroCandidato />} />
           <Route path="/registro-empresa" element={<EnConstruccion titulo="Registrar mi empresa" />} />
 
           {/* Solo candidatos (RF-010) */}
           <Route path="/mis-solicitudes" element={
-            <RutaProtegida rol="candidato"><EnConstruccion titulo="Mis solicitudes" /></RutaProtegida>
+            <RutaProtegida rol="candidato"><MisSolicitudes /></RutaProtegida>
           } />
 
           {/* Solo empresas (RF-010) */}

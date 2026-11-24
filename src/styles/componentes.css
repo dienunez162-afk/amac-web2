@@ -455,3 +455,69 @@ details summary {
     flex-basis: 45%;
   }
 }
+
+/* ===== ENTREGA 3: mensajes, errores y detalles ===== */
+.mensaje {
+  border-radius: var(--radio);
+  padding: var(--espacio-m);
+  margin-block: var(--espacio-m);
+  border-left: 6px solid;
+  font-weight: bold;
+}
+
+.mensaje-error { background-color: #fbe0e0; color: #7f1d1d; border-color: #b91c1c; }
+.mensaje-exito { background-color: #dcf3e3; color: #14532d; border-color: #15803d; }
+.mensaje-info  { background-color: #eceff5; color: var(--azul); border-color: var(--azul); }
+
+.error-campo {
+  color: #b91c1c;
+  font-weight: bold;
+  font-size: var(--texto-sm);
+}
+
+.campo [aria-invalid="true"] {
+  border-color: #b91c1c;
+}
+
+/* ventana de confirmación abierta desde React (la Entrega 2 usaba :target) */
+.modal.abierto {
+  display: flex;
+}
+
+.caja-modal h2:focus {
+  outline: none;
+}
+
+.lista-datos {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--espacio-s);
+  margin-block: var(--espacio-m);
+}
+
+.texto-multilinea {
+  white-space: pre-line;
+}
+
+.seccion-detalle {
+  margin-top: var(--espacio-l);
+}
+
+.acciones-detalle {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-m);
+  margin-top: var(--espacio-l);
+}
+
+@media (min-width: 768px) {
+  .acciones-detalle {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .acciones-detalle .boton {
+    width: auto;
+  }
+}
