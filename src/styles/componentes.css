@@ -1,0 +1,457 @@
+/* ===== BOTONES ===== */
+.boton {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 3rem; /* 48px */
+  padding: 0.75rem 1.5rem;
+  font-family: inherit;
+  font-size: var(--texto-base);
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 2rem;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.boton-azul {
+  background-color: var(--azul);
+  color: white;
+}
+
+.boton-azul:hover {
+  background-color: #161d32;
+}
+
+/* texto azul sobre naranja: contraste 5.84:1 */
+.boton-naranja {
+  background-color: var(--naranja);
+  color: var(--azul);
+}
+
+.boton-naranja:hover {
+  background-color: #ff6a47;
+}
+
+/* botón con borde: "Cancelar", "Ver más empleos", "Crear una cuenta" */
+.boton-borde {
+  background-color: white;
+  color: var(--azul);
+  border-color: var(--azul);
+}
+
+.boton-borde:hover {
+  background-color: #eceff5;
+}
+
+.boton-texto {
+  background-color: transparent;
+  color: var(--azul);
+  font-weight: normal;
+}
+
+.boton-texto:hover {
+  text-decoration: underline;
+}
+
+.boton[disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.ver-mas {
+  text-align: center;
+  margin-top: var(--espacio-l);
+}
+
+.ver-mas .boton {
+  width: auto;
+}
+
+/* ===== TARJETAS ===== */
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-m);
+  background-color: white;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: var(--espacio-l);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.tarjeta-arriba {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-m);
+}
+
+.tarjeta h3 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.tarjeta h3 a {
+  color: var(--azul);
+  text-decoration: none;
+}
+
+.logo-empresa {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  background-color: var(--celeste-sec1);
+  color: var(--azul);
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.empresa {
+  flex: 1;
+  margin: 0;
+  font-weight: bold;
+}
+
+.hora {
+  display: block;
+  font-size: var(--texto-sm);
+  font-weight: normal;
+  color: var(--gris-texto);
+}
+
+.lugar {
+  margin: 0;
+  color: var(--gris-texto);
+}
+
+.sueldo {
+  margin: 0;
+  font-weight: bold;
+}
+
+/* botón de guardar vacante: área táctil de 44px */
+.guardar {
+  margin-left: auto;
+  min-width: 44px;
+  min-height: 44px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.guardar img {
+  width: 24px;
+  height: 24px;
+}
+
+/* ===== ETIQUETAS ===== */
+.etiquetas {
+  display: flex;
+  gap: var(--espacio-s);
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.etiquetas li {
+  background-color: #f1f5f9;
+  color: #475569;
+  font-size: var(--texto-sm);
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.nueva {
+  background-color: #fee2e2;
+  color: #991b1b;
+  font-size: var(--texto-sm);
+  font-weight: bold;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+  margin-left: 0.5rem;
+}
+
+/* estados de solicitudes y vacantes */
+.estado {
+  display: inline-block;
+  font-size: var(--texto-sm);
+  font-weight: bold;
+  padding: 0.15rem 0.6rem;
+  border-radius: 2rem;
+}
+
+.pendiente { background-color: #ffe3db; color: #8f2a13; }
+.aceptada, .activa { background-color: #dcf3e3; color: #14532d; }
+.rechazada, .cerrada { background-color: #fbe0e0; color: #7f1d1d; }
+.pausada { background-color: #eceff5; color: var(--azul); }
+
+/* ===== FORMULARIOS ===== */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-m);
+  margin-bottom: var(--espacio-l);
+  max-width: 40rem;
+  margin-inline: auto;
+}
+
+.formulario-tarjeta {
+  background-color: white;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: var(--espacio-l);
+  max-width: 32rem;
+  margin-inline: auto;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-s);
+  margin-bottom: var(--espacio-m);
+}
+
+.campo label {
+  font-weight: bold;
+}
+
+/* borde oscuro para que el campo se distinga del fondo */
+.campo input,
+.campo textarea,
+.campo select {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid #6b7280;
+  border-radius: var(--radio);
+  font-family: inherit;
+  font-size: var(--texto-base);
+  background-color: white;
+}
+
+.ayuda-campo {
+  font-size: var(--texto-sm);
+  color: var(--gris-texto);
+}
+
+fieldset {
+  border: 0;
+  margin: 0 0 var(--espacio-m) 0;
+}
+
+legend {
+  font-weight: bold;
+  margin-bottom: var(--espacio-s);
+}
+
+/* radios y checkboxes */
+.opcion {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 2.75rem;
+}
+
+.opcion input {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: none;
+}
+
+.opcion label {
+  font-weight: normal;
+}
+
+/* panel desplegable */
+.panel,
+details {
+  background-color: white;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: var(--espacio-m);
+  margin-block: var(--espacio-m);
+}
+
+.panel summary,
+details summary {
+  font-weight: bold;
+  cursor: pointer;
+  font-size: var(--texto-base);
+  color: var(--azul);
+  padding-block: 0.65rem; /* alto táctil de ~48px */
+}
+
+.panel-contenido {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-m);
+  margin-top: var(--espacio-m);
+  padding-top: var(--espacio-m);
+  border-top: 1px solid var(--borde);
+}
+
+/* ===== RESULTADOS ===== */
+.resultados {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--espacio-l);
+  flex-wrap: wrap;
+  gap: var(--espacio-m);
+}
+
+.resultados h2 {
+  font-size: var(--texto-h2);
+  color: var(--azul);
+}
+
+.resultados .campo {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--espacio-s);
+  margin-bottom: 0;
+}
+
+.resultados label {
+  font-size: var(--texto-sm);
+  color: var(--gris-texto);
+}
+
+.resultados select {
+  min-height: 44px;
+  width: auto;
+  padding: 0.4rem 0.8rem;
+}
+
+/* ===== DETALLE DE VACANTE ===== */
+.carrusel {
+  display: flex;
+  gap: var(--espacio-s);
+  overflow-x: auto;
+  padding-bottom: var(--espacio-s);
+}
+
+.imagen-carrusel {
+  flex: 0 0 85%;
+  min-height: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--espacio-m);
+  background-color: var(--celeste-sec1);
+  border-radius: var(--radio);
+  font-weight: bold;
+  color: var(--azul);
+}
+
+.seccion-detalle h2 {
+  font-size: var(--texto-h2);
+  margin-bottom: var(--espacio-s);
+}
+
+.seccion-detalle ul,
+.seccion-detalle ol {
+  padding-left: 1.5rem;
+}
+
+.seccion-detalle ul {
+  list-style: disc;
+}
+
+.barra-postular {
+  margin-top: var(--espacio-l);
+}
+
+/* ===== VENTANA DE CONFIRMACIÓN ===== */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(32, 41, 69, 0.75);
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 999;
+}
+
+.modal:target {
+  display: flex;
+}
+
+.caja-modal {
+  background-color: white;
+  border-radius: var(--radio);
+  padding: var(--espacio-l);
+  max-width: 26rem;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-m);
+}
+
+.palomita {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+  background-color: var(--naranja);
+  color: var(--azul);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.enlace-centro {
+  display: block;
+  text-align: center;
+  padding: 0.6rem 0;
+  color: var(--azul);
+  text-decoration: underline;
+}
+
+/* ===== PANEL DE EMPRESA ===== */
+.prospecto {
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: var(--espacio-m);
+  margin-bottom: var(--espacio-m);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-s);
+}
+
+.prospecto h4 {
+  font-size: 1.25rem;
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-s);
+}
+
+.acciones .boton {
+  width: auto;
+}
+
+.vacio {
+  text-align: center;
+  color: var(--gris-texto);
+}
+
+@media (min-width: 768px) {
+  .imagen-carrusel {
+    flex-basis: 45%;
+  }
+}

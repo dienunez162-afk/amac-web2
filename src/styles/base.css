@@ -1,0 +1,68 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-base);
+  color: var(--azul);
+  background-color: var(--gris-fondo);
+  line-height: 1.5;
+}
+
+/* títulos con Baskervville */
+h1, h2, h3, h4 {
+  font-family: var(--fuente-titulos);
+  line-height: 1.2;
+}
+
+/* foco visible: contorno azul con anillo blanco */
+:focus-visible {
+  outline: 3px solid var(--azul);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px white;
+}
+
+/* enlace de saltar al contenido */
+.saltar {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.saltar:focus {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  width: auto;
+  height: auto;
+  padding: 0.75rem 1rem;
+  background-color: white;
+  border: 2px solid var(--azul);
+  z-index: 9999;
+}
+
+a {
+  color: var(--azul);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}

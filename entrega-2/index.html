@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vacantes disponibles | AMAC</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baskervville&amp;family=Work+Sans:wght@400;700&amp;display=swap">  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/componentes.css">
+</head>
+<body>
+  <a class="saltar" href="#principal">Saltar al contenido</a>
+
+  <header class="encabezado">
+    <div class="contenedor fila">
+      <a class="logo" href="index.html"><img src="img/logo.png" alt="AMAC, ir al inicio" width="103" height="38"></a>
+      <a class="ayuda" href="tel:8100000000">Ayuda: 81 0000 0000</a>
+      <nav class="menu" aria-label="Navegación principal">
+        <ul>
+          <li><a class="actual" href="index.html" aria-current="page"><img src="img/empleos.svg" alt="">Empleos</a></li>
+          <li><a href="mis-solicitudes.html"><img src="img/solicitudes.svg" alt="">Solicitudes</a></li>
+          <li><a href="empresa-vacantes.html"><img src="img/empresa.svg" alt="">Mi empresa</a></li>
+          <li><a href="login.html"><img src="img/ingresar.svg" alt="">Ingresar</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="titulo-azul">
+    <div class="contenedor">
+      <h1>Empleos para ti</h1>
+      <p>Encuentra trabajo fácil y rápido</p>
+    </div>
+  </div>
+
+  <main id="principal" class="principal contenedor">
+
+ 
+    <form class="formulario" action="index.html" method="get">
+      <div class="campo">
+        <label for="buscar">Buscar por empleo, empresa o ubicación</label>
+        <input type="search" id="buscar" name="q" placeholder="Ej. administrativo, Softtek, Monterrey">
+      </div>
+
+      <details class="panel">
+        <summary>Filtrar resultados</summary>
+        <div class="panel-contenido">
+          <div class="campo">
+            <label for="categoria">Categoría</label>
+            <select id="categoria" name="categoria">
+              <option>Todas las áreas</option>
+              <option>Administración</option>
+              <option>Tecnología</option>
+              <option>Limpieza</option>
+              <option>Logística</option>
+              <option>Servicios</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="horario">Horario</label>
+            <select id="horario" name="horario">
+              <option>Cualquier horario</option>
+              <option>Matutino</option>
+              <option>Vespertino</option>
+              <option>Medio tiempo</option>
+              <option>Tiempo completo</option>
+            </select>
+          </div>
+        </div>
+      </details>
+
+      <button type="submit" class="boton boton-azul">Buscar empleos</button>
+    </form>
+
+
+    <div class="resultados">
+      <h2>24 vacantes</h2>
+      <div class="campo">
+        <label for="orden">Ordenar por</label>
+        <select id="orden">
+          <option>Más recientes</option>
+          <option>Mayor sueldo</option>
+        </select>
+      </div>
+    </div>
+
+    <ul class="lista">
+
+      <li>
+        <article class="tarjeta">
+          <div class="tarjeta-arriba">
+            <span class="logo-empresa">gc</span>
+            <p class="empresa">Grupo Cónsul <span class="nueva">NUEVA</span><span class="hora">Hace 2 horas</span></p>
+            <button type="button" class="guardar" aria-label="Guardar vacante Auxiliar administrativo"><img src="img/guardar.svg" alt=""></button>
+          </div>
+          <h3><a href="vacante.html">Auxiliar administrativo</a></h3>
+          <p class="lugar">Santa Catarina, N. L.</p>
+          <p class="sueldo">$10,000 – $12,000 / mes</p>
+          <ul class="etiquetas">
+            <li>Presencial</li>
+            <li>Tiempo completo</li>
+          </ul>
+          <a class="boton boton-naranja" href="vacante.html">Ver y postularte</a>
+        </article>
+      </li>
+
+      <li>
+        <article class="tarjeta">
+          <div class="tarjeta-arriba">
+            <span class="logo-empresa">S</span>
+            <p class="empresa">Softtek<span class="hora">Hace 5 horas</span></p>
+            <button type="button" class="guardar" aria-label="Guardar vacante Soporte técnico"><img src="img/guardar.svg" alt=""></button>
+          </div>
+          <h3><a href="vacante.html">Soporte técnico</a></h3>
+          <p class="lugar">Monterrey, N. L.</p>
+          <p class="sueldo">$16,000 – $20,000 / mes</p>
+          <ul class="etiquetas">
+            <li>Híbrido</li>
+            <li>Tiempo completo</li>
+          </ul>
+          <a class="boton boton-naranja" href="vacante.html">Ver y postularte</a>
+        </article>
+      </li>
+
+
+      <li>
+        <article class="tarjeta">
+          <div class="tarjeta-arriba">
+            <span class="logo-empresa">LR</span>
+            <p class="empresa">Limpieza Regia<span class="hora">Hace 1 día</span></p>
+            <button type="button" class="guardar" aria-label="Guardar vacante Intendente general"><img src="img/guardar.svg" alt=""></button>
+          </div>
+          <h3><a href="vacante.html">Intendente general</a></h3>
+          <p class="lugar">San Nicolás, N. L.</p>
+          <p class="sueldo">$9,500 – $11,000 / mes</p>
+          <ul class="etiquetas">
+            <li>Presencial</li>
+            <li>Medio tiempo</li>
+          </ul>
+          <a class="boton boton-naranja" href="vacante.html">Ver y postularte</a>
+        </article>
+      </li>
+
+      <li>
+        <article class="tarjeta">
+          <div class="tarjeta-arriba">
+            <span class="logo-empresa">DN</span>
+            <p class="empresa">Distribuidora Norte<span class="hora">Hace 1 día</span></p>
+            <button type="button" class="guardar" aria-label="Guardar vacante Recepción de almacén"><img src="img/guardar.svg" alt=""></button>
+          </div>
+          <h3><a href="vacante.html">Recepción de almacén</a></h3>
+          <p class="lugar">Monterrey, N. L.</p>
+          <p class="sueldo">$8,600 – $9,500 / mes</p>
+          <ul class="etiquetas">
+            <li>Presencial</li>
+            <li>Tiempo completo</li>
+          </ul>
+          <a class="boton boton-naranja" href="vacante.html">Ver y postularte</a>
+        </article>
+      </li>
+
+      <li>
+        <article class="tarjeta">
+          <div class="tarjeta-arriba">
+            <span class="logo-empresa">MN</span>
+            <p class="empresa">Maderas del Norte<span class="hora">Hace 2 días</span></p>
+            <button type="button" class="guardar" aria-label="Guardar vacante Ayudante de carpintería"><img src="img/guardar.svg" alt=""></button>
+          </div>
+          <h3><a href="vacante.html">Ayudante de carpintería</a></h3>
+          <p class="lugar">Santa Catarina, N. L.</p>
+          <p class="sueldo">$10,000 – $12,000 / mes</p>
+          <ul class="etiquetas">
+            <li>Presencial</li>
+            <li>Tiempo completo</li>
+          </ul>
+          <a class="boton boton-naranja" href="vacante.html">Ver y postularte</a>
+        </article>
+      </li>
+
+      <li>
+        <article class="tarjeta">
+          <div class="tarjeta-arriba">
+            <span class="logo-empresa">HP</span>
+            <p class="empresa">Hotel Plaza<span class="hora">Hace 3 días</span></p>
+            <button type="button" class="guardar" aria-label="Guardar vacante Recepcionista"><img src="img/guardar.svg" alt=""></button>
+          </div>
+          <h3><a href="vacante.html">Recepcionista</a></h3>
+          <p class="lugar">Centro, Monterrey, N. L.</p>
+          <p class="sueldo">$9,000 – $10,500 / mes</p>
+          <ul class="etiquetas">
+            <li>Presencial</li>
