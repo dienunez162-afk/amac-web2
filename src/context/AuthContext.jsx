@@ -9,6 +9,7 @@ export function AuthProvider({ children }) {
   const [sesion, setSesion] = useState(undefined) // undefined = todavía no sabemos
   const [perfil, setPerfil] = useState(null)
   const [cargando, setCargando] = useState(true)
+  const [perfilDe, setPerfilDe] = useState(null) // id del usuario cuyo perfil ya se consultó
 
   // 1) Escuchar la sesión: al abrir la página, al iniciar y al cerrar sesión
   useEffect(() => {
@@ -33,6 +34,7 @@ export function AuthProvider({ children }) {
     supabase.from('perfiles').select('*').eq('id', usuarioId).single()
       .then(({ data }) => {
         setPerfil(data)
+        setPerfilDe(usuarioId)
         setCargando(false)
       })
   }, [sesionLista, usuarioId])
@@ -42,8 +44,12 @@ export function AuthProvider({ children }) {
     await supabase.auth.signOut()
   }
 
+  // Mientras el perfil cargado no sea el del usuario actual (justo después de entrar o registrarse),
+  // seguimos "cargando" para que RutaProtegida no redirija antes de tiempo.
+  const perfilPendiente = Boolean(usuarioId) && perfilDe !== usuarioId
+
   return (
-    <AuthContext.Provider value={{ sesion, perfil, cargando, cerrarSesion }}>
+    <AuthContext.Provider value={{ sesion, perfil, cargando: cargando || perfilPendiente, cerrarSesion }}>
       {children}
     </AuthContext.Provider>
   )

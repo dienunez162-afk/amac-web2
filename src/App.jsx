@@ -8,16 +8,10 @@ import DetalleVacante from './pages/DetalleVacante'
 import Login from './pages/Login'
 import RegistroCandidato from './pages/RegistroCandidato'
 import MisSolicitudes from './pages/MisSolicitudes'
-
-// TEMPORAL (Paso 3): marcador para las páginas que se construyen en los Pasos 4 y 5.
-function EnConstruccion({ titulo }) {
-  return (
-    <>
-      <h1>{titulo}</h1>
-      <p role="status">Esta página está en construcción.</p>
-    </>
-  )
-}
+import RegistroEmpresa from './pages/RegistroEmpresa'
+import PublicarVacante from './pages/PublicarVacante'
+import EmpresaVacantes from './pages/EmpresaVacantes'
+import SolicitudesRecibidas from './pages/SolicitudesRecibidas'
 
 export default function App() {
   return (
@@ -30,7 +24,7 @@ export default function App() {
           <Route path="/vacantes/:id" element={<DetalleVacante />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<RegistroCandidato />} />
-          <Route path="/registro-empresa" element={<EnConstruccion titulo="Registrar mi empresa" />} />
+          <Route path="/registro-empresa" element={<RegistroEmpresa />} />
 
           {/* Solo candidatos (RF-010) */}
           <Route path="/mis-solicitudes" element={
@@ -39,13 +33,13 @@ export default function App() {
 
           {/* Solo empresas (RF-010) */}
           <Route path="/empresa/vacantes" element={
-            <RutaProtegida rol="empresa"><EnConstruccion titulo="Mis vacantes" /></RutaProtegida>
+            <RutaProtegida rol="empresa"><EmpresaVacantes /></RutaProtegida>
           } />
           <Route path="/empresa/publicar" element={
-            <RutaProtegida rol="empresa"><EnConstruccion titulo="Publicar vacante" /></RutaProtegida>
+            <RutaProtegida rol="empresa"><PublicarVacante /></RutaProtegida>
           } />
           <Route path="/empresa/vacantes/:id/solicitudes" element={
-            <RutaProtegida rol="empresa"><EnConstruccion titulo="Solicitudes recibidas" /></RutaProtegida>
+            <RutaProtegida rol="empresa"><SolicitudesRecibidas /></RutaProtegida>
           } />
 
           <Route path="*" element={<NoEncontrada />} />
