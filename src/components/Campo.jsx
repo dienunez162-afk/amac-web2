@@ -3,6 +3,7 @@
 export default function Campo({
   id,
   etiqueta,
+  etiquetaOculta = false, // la etiqueta existe para lectores de pantalla pero no se ve
   obligatorio = false,
   ayuda,
   error,
@@ -25,7 +26,7 @@ export default function Campo({
 
   return (
     <div className="campo">
-      <label htmlFor={id}>
+      <label htmlFor={id} className={etiquetaOculta ? 'solo-lectores' : undefined}>
         {etiqueta}{obligatorio && ' *'}
       </label>
       {como === 'textarea' && <textarea rows={4} {...comunes} />}

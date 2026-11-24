@@ -76,17 +76,17 @@ export default function PublicarVacante() {
 
   return (
     <>
-      <h1>Publicar vacante</h1>
-      <p>Los campos con * son obligatorios.</p>
+      <h1 className="titulo-centrado">Publicar Vacante</h1>
 
       <form className="formulario" onSubmit={publicar} noValidate>
-        <fieldset className="panel">
+        <fieldset className="seccion-form">
           <legend>1. Datos del puesto</legend>
-          <Campo id="titulo" etiqueta="Puesto" obligatorio ayuda="Ejemplo: Auxiliar administrativo."
+          <p className="nota">* Campo obligatorio</p>
+          <Campo id="titulo" etiqueta="Puesto" obligatorio placeholder="Ej. Auxiliar administrativo"
             value={datos.titulo} onChange={cambiar} error={errores.titulo} />
-          <Campo id="sueldo" etiqueta="Sueldo mensual (pesos)" obligatorio type="number" min="1" step="1" inputMode="numeric"
+          <Campo id="sueldo" etiqueta="Sueldo mensual (pesos)" obligatorio type="number" min="1" step="1" inputMode="numeric" placeholder="Ej. 10000"
             value={datos.sueldo} onChange={cambiar} error={errores.sueldo} />
-          <Campo id="ubicacion" etiqueta="Ubicación" obligatorio ayuda="Colonia o municipio, por ejemplo: San Nicolás, N. L."
+          <Campo id="ubicacion" etiqueta="Ubicación" obligatorio placeholder="Colonia o municipio"
             value={datos.ubicacion} onChange={cambiar} error={errores.ubicacion} />
           <Campo id="horario" etiqueta="Horario" obligatorio como="select"
             value={datos.horario} onChange={cambiar} error={errores.horario}>
@@ -100,7 +100,7 @@ export default function PublicarVacante() {
           </Campo>
         </fieldset>
 
-        <fieldset className="panel">
+        <fieldset className="seccion-form">
           <legend>2. Detalles</legend>
           <Campo id="descripcion" etiqueta="Descripción de actividades" obligatorio como="textarea"
             value={datos.descripcion} onChange={cambiar} error={errores.descripcion} />
@@ -110,7 +110,7 @@ export default function PublicarVacante() {
             value={datos.prestaciones} onChange={cambiar} error={errores.prestaciones} />
         </fieldset>
 
-        <fieldset className="panel">
+        <fieldset className="seccion-form">
           <legend>3. ¿Cómo quieres recibir postulaciones? *</legend>
           <div className="opcion">
             <input type="radio" id="post-plataforma" name="postulacion" value="plataforma"
@@ -125,13 +125,13 @@ export default function PublicarVacante() {
           {/* El teléfono solo aparece si se elige postulación por teléfono */}
           {datos.postulacion === 'telefono' && (
             <Campo id="telefono" etiqueta="Teléfono de contacto" obligatorio type="tel" inputMode="numeric"
-              ayuda="10 dígitos. Aparecerá en el botón “Llamar” de la vacante."
+              placeholder="10 dígitos" ayuda="Aparecerá en el botón “Llamar” de la vacante."
               value={datos.telefono} onChange={cambiar} error={errores.telefono} />
           )}
         </fieldset>
 
         <Mensaje tipo="error">{mensaje}</Mensaje>
-        <button type="submit" className="boton boton-naranja" disabled={enviando}>
+        <button type="submit" className="boton boton-naranja boton-pildora" disabled={enviando}>
           {enviando ? 'Publicando…' : 'Publicar vacante'}
         </button>
         <Link className="boton boton-texto" to="/empresa/vacantes">Cancelar y volver a mis vacantes</Link>

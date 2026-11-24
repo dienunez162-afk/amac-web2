@@ -4,7 +4,10 @@ import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
-import { iniciales, moneda, fecha } from '../lib/formato'
+import { fecha } from '../lib/formato'
+import EncabezadoEmpresa from '../components/EncabezadoEmpresa'
+import DatosVacante from '../components/DatosVacante'
+import Icono from '../components/Icono'
 import EtiquetaEstatus from '../components/EtiquetaEstatus'
 import Mensaje from '../components/Mensaje'
 
@@ -20,7 +23,7 @@ export default function MisSolicitudes() {
   const cargar = useCallback(async () => {
     const { data, error } = await supabase
       .from('solicitudes')
-      .select('id, estatus, creada_en, vacante:vacantes(id, titulo, ubicacion, sueldo, empresa:perfiles(nombre))')
+      .select('id, estatus, creada_en, vacante:vacantes(id, titulo, ubicacion, sueldo, horario, categoria, creada_en, empresa:perfiles(nombre))')
       .eq('candidato_id', usuarioId)
       .order('creada_en', { ascending: false })
     if (error) setMensaje({ tipo: 'error', texto: 'No pudimos cargar tus solicitudes.' })
@@ -49,7 +52,10 @@ export default function MisSolicitudes() {
 
   return (
     <>
-      <h1>Mis solicitudes</h1>
+      <div className="barra-titulo sangrado">
+        <h1>Mis solicitudes:</h1>
+        <span className="avatar" aria-hidden="true"><Icono nombre="usuario" tamano={28} /></span>
+      </div>
 
       {perfil && !perfil.aprobado && (
         <Mensaje tipo="info">
@@ -75,21 +81,16 @@ export default function MisSolicitudes() {
             return (
               <li key={s.id}>
                 <article className="tarjeta">
-                  <div className="tarjeta-arriba">
-                    <span className="logo-empresa" aria-hidden="true">{iniciales(empresa)}</span>
-                    <p className="empresa">
-                      {empresa} <EtiquetaEstatus estatus={s.estatus} />
-                      <span className="hora">Aplicaste el {fecha(s.creada_en)}</span>
-                    </p>
-                  </div>
+                  <EncabezadoEmpresa
+                    vacante={s.vacante ?? { id: s.id, empresa: { nombre: empresa } }}
+                    extra={<EtiquetaEstatus estatus={s.estatus} />}
+                    textoHora={`Aplicaste el ${fecha(s.creada_en)}`}
+                  />
                   <h2>
                     <Link to={`/vacantes/${s.vacante?.id}`}>{s.vacante?.titulo ?? 'Vacante'}</Link>
                   </h2>
                   {s.vacante && (
-                    <>
-                      <p className="lugar">{s.vacante.ubicacion}</p>
-                      <p className="sueldo">{moneda(s.vacante.sueldo)} / mes</p>
-                    </>
+                    <DatosVacante vacante={s.vacante} />
                   )}
                   {s.estatus !== 'Cancelada' && (
                     <button

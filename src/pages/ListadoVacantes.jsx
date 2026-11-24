@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { HORARIOS, CATEGORIAS } from '../lib/catalogos'
 import TarjetaVacante from '../components/TarjetaVacante'
+import Icono from '../components/Icono'
 
 // Quita caracteres que romperían el filtro .or() de Supabase (comas, paréntesis, comodines)
 const limpiar = texto => texto.replace(/[,()%*\\]/g, ' ').trim()
@@ -64,47 +65,57 @@ export default function ListadoVacantes() {
 
   return (
     <>
-      <h1>Empleos para ti</h1>
-      <p>Encuentra trabajo fácil y rápido.</p>
+      <section className="hero sangrado">
+        <h1>Empleos para ti</h1>
+        <p>Encuentra trabajo fácil y rápido</p>
+      </section>
 
-      <form className="formulario" onSubmit={buscar} role="search">
-        <div className="campo">
-          <label htmlFor="buscar">Buscar por puesto o ubicación</label>
+      <form onSubmit={buscar} role="search" aria-label="Buscar vacantes">
+        <div className="barra-filtros sangrado">
+          <details open={Boolean(horario || categoria)}>
+            <summary>
+              <Icono nombre="filtro" />
+              Filtrar resultados
+              <Icono nombre="chevronDerecha" tamano={20} className="chevron" />
+            </summary>
+            <div className="contenido-filtros">
+              <div className="campo">
+                <label htmlFor="categoria">Categoría</label>
+                <select id="categoria" value={categoria} onChange={e => setCategoria(e.target.value)}>
+                  <option value="">Todas las áreas</option>
+                  {CATEGORIAS.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </div>
+              <div className="campo">
+                <label htmlFor="horario">Horario</label>
+                <select id="horario" value={horario} onChange={e => setHorario(e.target.value)}>
+                  <option value="">Cualquier horario</option>
+                  {HORARIOS.map(h => <option key={h} value={h}>{h}</option>)}
+                </select>
+              </div>
+              <button type="submit" className="boton boton-naranja">Buscar empleos</button>
+            </div>
+          </details>
+          {hayFiltros && (
+            <button type="button" className="limpiar" onClick={limpiarFiltros}>
+              Limpiar búsqueda y filtros
+            </button>
+          )}
+        </div>
+
+        <div className="buscador">
+          <button type="submit" aria-label="Buscar">
+            <Icono nombre="lupa" />
+          </button>
+          <label htmlFor="buscar" className="solo-lectores">Buscar por empleo o ubicación</label>
           <input
             type="search"
             id="buscar"
             value={texto}
             onChange={e => setTexto(e.target.value)}
-            placeholder="Ej. administrativo, Monterrey"
+            placeholder="Empleo o ubicación"
           />
         </div>
-
-        <details className="panel" open={Boolean(horario || categoria)}>
-          <summary>Filtrar resultados</summary>
-          <div className="panel-contenido">
-            <div className="campo">
-              <label htmlFor="categoria">Categoría</label>
-              <select id="categoria" value={categoria} onChange={e => setCategoria(e.target.value)}>
-                <option value="">Todas las áreas</option>
-                {CATEGORIAS.map(c => <option key={c} value={c}>{c}</option>)}
-              </select>
-            </div>
-            <div className="campo">
-              <label htmlFor="horario">Horario</label>
-              <select id="horario" value={horario} onChange={e => setHorario(e.target.value)}>
-                <option value="">Cualquier horario</option>
-                {HORARIOS.map(h => <option key={h} value={h}>{h}</option>)}
-              </select>
-            </div>
-          </div>
-        </details>
-
-        <button type="submit" className="boton boton-azul">Buscar empleos</button>
-        {hayFiltros && (
-          <button type="button" className="boton boton-borde" onClick={limpiarFiltros}>
-            Quitar búsqueda y filtros
-          </button>
-        )}
       </form>
 
       <div className="resultados">
@@ -112,7 +123,7 @@ export default function ListadoVacantes() {
           {cargando ? 'Buscando…' : `${vacantes.length} ${vacantes.length === 1 ? 'vacante' : 'vacantes'}`}
         </h2>
         <div className="campo">
-          <label htmlFor="orden">Ordenar por</label>
+          <label htmlFor="orden" className="solo-lectores">Ordenar por</label>
           <select id="orden" value={orden} onChange={e => setOrden(e.target.value)}>
             <option value="recientes">Más recientes</option>
             <option value="sueldo">Mayor sueldo</option>

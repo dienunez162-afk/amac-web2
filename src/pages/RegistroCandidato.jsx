@@ -6,6 +6,7 @@ import { supabase } from '../lib/supabase'
 import { esCorreo, esTelefono, soloDigitos, MIN_CONTRASENA } from '../lib/validaciones'
 import Campo from '../components/Campo'
 import Mensaje from '../components/Mensaje'
+import Icono from '../components/Icono'
 
 const VACIO = {
   nombre: '', correo: '', contrasena: '', confirmar: '',
@@ -79,7 +80,8 @@ export default function RegistroCandidato() {
 
   if (registrado) {
     return (
-      <section className="formulario-tarjeta">
+      <section className="tarjeta tarjeta-exito">
+        <div className="icono-modal"><Icono nombre="palomita" tamano={44} grosor={3} /></div>
         <h1>¡Tu cuenta fue creada!</h1>
         <Mensaje tipo="exito">Bienvenido(a), {datos.nombre.trim()}. Ya iniciaste sesión.</Mensaje>
         <p>
@@ -93,42 +95,42 @@ export default function RegistroCandidato() {
 
   return (
     <>
-      <h1>Registro de candidato</h1>
-      <p>Los campos con * son obligatorios.</p>
+      <h1 className="titulo-centrado">Registro de Candidato</h1>
 
       <form className="formulario" onSubmit={enviar} noValidate>
-        <fieldset className="panel">
+        <fieldset className="seccion-form">
           <legend>1. Datos de acceso</legend>
-          <Campo id="correo" etiqueta="Correo electrónico" obligatorio type="email" autoComplete="email"
+          <p className="nota">* Campo obligatorio</p>
+          <Campo id="correo" etiqueta="Correo electrónico" obligatorio type="email" autoComplete="email" placeholder="ejemplo@correo.com"
             value={datos.correo} onChange={cambiar} error={errores.correo} />
           <Campo id="contrasena" etiqueta="Contraseña" obligatorio type="password" autoComplete="new-password"
-            ayuda={`Mínimo ${MIN_CONTRASENA} caracteres.`}
+            placeholder={`Mínimo ${MIN_CONTRASENA} caracteres`}
             value={datos.contrasena} onChange={cambiar} error={errores.contrasena} />
-          <Campo id="confirmar" etiqueta="Confirmar contraseña" obligatorio type="password" autoComplete="new-password"
+          <Campo id="confirmar" etiqueta="Confirmar contraseña" obligatorio type="password" autoComplete="new-password" placeholder="Repite tu contraseña"
             value={datos.confirmar} onChange={cambiar} error={errores.confirmar} />
         </fieldset>
 
-        <fieldset className="panel">
+        <fieldset className="seccion-form">
           <legend>2. Datos personales</legend>
-          <Campo id="nombre" etiqueta="Nombre completo" obligatorio autoComplete="name"
+          <Campo id="nombre" etiqueta="Nombre completo" obligatorio autoComplete="name" placeholder="Tus nombres y apellidos"
             value={datos.nombre} onChange={cambiar} error={errores.nombre} />
           <Campo id="telefono" etiqueta="Teléfono celular" obligatorio type="tel" autoComplete="tel" inputMode="numeric"
-            ayuda="10 dígitos, por ejemplo 8112345678."
+            placeholder="10 dígitos"
             value={datos.telefono} onChange={cambiar} error={errores.telefono} />
-          <Campo id="edad" etiqueta="Edad" obligatorio type="number" min="18" max="120" inputMode="numeric"
+          <Campo id="edad" etiqueta="Edad" obligatorio type="number" min="18" max="120" inputMode="numeric" placeholder="Años cumplidos"
             value={datos.edad} onChange={cambiar} error={errores.edad} />
-          <Campo id="colonia" etiqueta="Colonia" obligatorio
+          <Campo id="colonia" etiqueta="Colonia" obligatorio placeholder="Nombre de tu colonia"
             value={datos.colonia} onChange={cambiar} error={errores.colonia} />
         </fieldset>
 
-        <fieldset className="panel">
+        <fieldset className="seccion-form">
           <legend>3. Experiencia laboral</legend>
           <Campo id="experiencia" etiqueta="Describe tu experiencia laboral" obligatorio como="textarea"
-            ayuda="Ejemplo: 20 años como contador; atención a clientes; manejo de caja."
+            placeholder="Describe brevemente tus puestos y funciones. Ej. 20 años como contador."
             value={datos.experiencia} onChange={cambiar} error={errores.experiencia} />
         </fieldset>
 
-        <fieldset className="panel">
+        <fieldset className="seccion-form">
           <legend>4. Términos y privacidad</legend>
           <div className="opcion">
             <input type="checkbox" id="terminos" name="terminos" checked={datos.terminos} onChange={cambiar}
@@ -140,7 +142,7 @@ export default function RegistroCandidato() {
         </fieldset>
 
         <Mensaje tipo="error">{mensaje}</Mensaje>
-        <button type="submit" className="boton boton-naranja" disabled={enviando}>
+        <button type="submit" className="boton boton-naranja boton-pildora" disabled={enviando}>
           {enviando ? 'Creando cuenta…' : 'Crear mi cuenta'}
         </button>
         <Link className="boton boton-texto" to="/login">¿Ya tienes cuenta? Inicia sesión</Link>

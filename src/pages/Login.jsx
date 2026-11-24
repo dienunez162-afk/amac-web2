@@ -49,21 +49,30 @@ export default function Login() {
   }
 
   return (
-    <>
-      <h1>Iniciar sesión</h1>
-      <form className="formulario" onSubmit={entrar} noValidate>
-        <Campo id="correo" etiqueta="Correo electrónico" obligatorio type="email" autoComplete="email"
+    <div className="login">
+      <div className="login-encabezado">
+        <h1>Iniciar sesión</h1>
+        <p>Entra para postularte o publicar vacantes.</p>
+      </div>
+
+      <form className="tarjeta-login" onSubmit={entrar} noValidate>
+        <Campo id="correo" etiqueta="Correo electrónico" etiquetaOculta obligatorio type="email" autoComplete="email"
+          placeholder="Correo electrónico"
           value={correo} onChange={e => setCorreo(e.target.value)} />
-        <Campo id="contrasena" etiqueta="Contraseña" obligatorio type="password" autoComplete="current-password"
+        <Campo id="contrasena" etiqueta="Contraseña" etiquetaOculta obligatorio type="password" autoComplete="current-password"
+          placeholder="Contraseña"
           value={contrasena} onChange={e => setContrasena(e.target.value)} />
 
         <Mensaje tipo="error">{mensaje}</Mensaje>
-        <button type="submit" className="boton boton-azul" disabled={enviando}>
-          {enviando ? 'Entrando…' : 'Iniciar sesión'}
+        <button type="submit" className="boton boton-azul boton-pildora" disabled={enviando}>
+          {enviando ? 'Entrando…' : 'Inicia sesión'}
         </button>
-        <Link className="boton boton-borde" to="/registro">Crear una cuenta</Link>
-        <Link className="boton boton-texto" to="/registro-empresa">¿Eres empresa? Regístrala aquí</Link>
+        <Link className="boton boton-texto" to="/registro">Crear una cuenta</Link>
       </form>
-    </>
+
+      <div className="login-pie">
+        <Link className="enlace-naranja" to="/registro-empresa">¿Eres empresa? Regístrala aquí</Link>
+      </div>
+    </div>
   )
 }

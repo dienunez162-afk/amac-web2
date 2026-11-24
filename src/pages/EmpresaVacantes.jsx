@@ -1,14 +1,17 @@
-// Mis vacantes (RF-020) con número de solicitudes y botones pausar / reactivar / cerrar (RF-021).
+// Mis vacantes (RF-020) con número de solicitudes, prospectos y botones pausar / reactivar / cerrar (RF-021).
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
-import { moneda, fecha } from '../lib/formato'
+import { fecha } from '../lib/formato'
+import DatosVacante from '../components/DatosVacante'
 import EtiquetaEstatus from '../components/EtiquetaEstatus'
+import Prospecto from '../components/Prospecto'
 import Mensaje from '../components/Mensaje'
+import Icono from '../components/Icono'
 
-// Cuántas solicitudes cuentan (las canceladas por el candidato no)
-const contarSolicitudes = v => v.solicitudes.filter(s => s.estatus !== 'Cancelada').length
+// Las solicitudes canceladas por el candidato no cuentan
+const vigentes = v => v.solicitudes.filter(s => s.estatus !== 'Cancelada')
 
 export default function EmpresaVacantes() {
   const { sesion, perfil } = useAuth()
@@ -23,7 +26,8 @@ export default function EmpresaVacantes() {
   const cargar = useCallback(async () => {
     const { data, error } = await supabase
       .from('vacantes')
-      .select('id, titulo, sueldo, ubicacion, estado, creada_en, solicitudes(estatus)')
+      .select(`id, titulo, sueldo, ubicacion, horario, categoria, estado, creada_en,
+        solicitudes(id, estatus, creada_en, candidato:perfiles(nombre, edad, colonia, experiencia))`)
       .eq('empresa_id', usuarioId)
       .order('creada_en', { ascending: false })
     if (error) setMensaje({ tipo: 'error', texto: 'No pudimos cargar tus vacantes.' })
@@ -47,11 +51,18 @@ export default function EmpresaVacantes() {
 
   return (
     <>
-      <h1>Mis vacantes</h1>
-      {perfil && <p>{perfil.nombre}{perfil.giro ? ` · ${perfil.giro}` : ''}</p>}
+      <div className="barra-titulo sangrado">
+        <div>
+          <h1>Mis vacantes:</h1>
+          {perfil && <p>{perfil.nombre}{perfil.giro ? ` · ${perfil.giro}` : ''}</p>}
+        </div>
+        <span className="avatar" aria-hidden="true"><Icono nombre="edificio" tamano={26} /></span>
+      </div>
 
-      <div className="formulario">
-        <Link className="boton boton-naranja" to="/empresa/publicar">Publicar nueva vacante</Link>
+      <div className="detalle">
+        <Link className="boton boton-naranja" to="/empresa/publicar">
+          <Icono nombre="mas" tamano={22} /> Publicar nueva vacante
+        </Link>
 
         {mensaje && <Mensaje tipo={mensaje.tipo}>{mensaje.texto}</Mensaje>}
         {cargando && <p role="status">Cargando tus vacantes…</p>}
@@ -59,48 +70,62 @@ export default function EmpresaVacantes() {
           <p className="vacio">Aún no has publicado vacantes.</p>
         )}
 
-        {vacantes.map((v, i) => {
-          const total = contarSolicitudes(v)
-          return (
-            <details className="panel" key={v.id} open={i === 0}>
-              <summary>{v.titulo} · {total} {total === 1 ? 'solicitud' : 'solicitudes'}</summary>
-              <div className="panel-contenido">
-                <p className="lugar">{v.ubicacion} · {moneda(v.sueldo)} / mes</p>
-                <p>
-                  <EtiquetaEstatus estatus={v.estado} /> Publicada el {fecha(v.creada_en)}
-                </p>
+        <div className="lista-vacantes">
+          {vacantes.map((v, i) => {
+            const prospectos = vigentes(v)
+            const total = prospectos.length
+            return (
+              <details className="tarjeta-vacante" key={v.id} open={i === 0}>
+                <summary>
+                  <h2>{v.titulo}</h2>
+                  <Icono nombre="circuloAbajo" tamano={40} grosor={1.8} className="flecha" />
+                  <div><DatosVacante vacante={v} conEtiquetas={false} /></div>
+                  <p>
+                    <EtiquetaEstatus estatus={v.estado} />{' '}
+                    <span className="por-mes">· {total} {total === 1 ? 'solicitud' : 'solicitudes'}</span>
+                  </p>
+                </summary>
 
-                <Link className="boton boton-azul" to={`/empresa/vacantes/${v.id}/solicitudes`}>
-                  Ver solicitudes ({total})
-                </Link>
+                <div className="cuerpo-vacante">
+                  <p className="nota">Publicada el {fecha(v.creada_en)} · {v.horario} · {v.categoria}</p>
 
-                <div className="acciones">
-                  {v.estado === 'activa' && (
-                    <button type="button" className="boton boton-borde"
-                      onClick={() => cambiarEstado(v, 'pausada', 'se pausó y ya no aparece en el listado')}>
-                      Pausar
-                    </button>
-                  )}
-                  {v.estado === 'pausada' && (
-                    <button type="button" className="boton boton-borde"
-                      onClick={() => cambiarEstado(v, 'activa', 'se reactivó y vuelve a aparecer en el listado')}>
-                      Reactivar
-                    </button>
-                  )}
-                  {v.estado !== 'cerrada' && (
-                    <button type="button" className="boton boton-borde"
-                      onClick={() => cambiarEstado(v, 'cerrada', 'se cerró')}>
-                      Cerrar vacante
-                    </button>
-                  )}
-                  {v.estado === 'activa' && (
-                    <Link className="boton boton-texto" to={`/vacantes/${v.id}`}>Ver como candidato</Link>
+                  <div className="acciones">
+                    {v.estado === 'activa' && (
+                      <button type="button" className="boton boton-borde"
+                        onClick={() => cambiarEstado(v, 'pausada', 'se pausó y ya no aparece en el listado')}>
+                        Pausar
+                      </button>
+                    )}
+                    {v.estado === 'pausada' && (
+                      <button type="button" className="boton boton-borde"
+                        onClick={() => cambiarEstado(v, 'activa', 'se reactivó y vuelve a aparecer en el listado')}>
+                        Reactivar
+                      </button>
+                    )}
+                    {v.estado !== 'cerrada' && (
+                      <button type="button" className="boton boton-borde"
+                        onClick={() => cambiarEstado(v, 'cerrada', 'se cerró')}>
+                        Cerrar vacante
+                      </button>
+                    )}
+                    {v.estado === 'activa' && (
+                      <Link className="boton boton-texto" to={`/vacantes/${v.id}`}>Ver como candidato</Link>
+                    )}
+                  </div>
+
+                  <h3>Prospectos:</h3>
+                  {total === 0 && <p className="vacio">Aún no hay solicitudes para esta vacante.</p>}
+                  {prospectos.slice(0, 2).map(s => <Prospecto key={s.id} solicitud={s} />)}
+                  {total > 0 && (
+                    <Link className="boton boton-azul" to={`/empresa/vacantes/${v.id}/solicitudes`}>
+                      Gestionar solicitudes ({total})
+                    </Link>
                   )}
                 </div>
-              </div>
-            </details>
-          )
-        })}
+              </details>
+            )
+          })}
+        </div>
       </div>
     </>
   )

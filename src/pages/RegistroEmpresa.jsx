@@ -66,35 +66,35 @@ export default function RegistroEmpresa() {
 
   return (
     <>
-      <h1>Registrar mi empresa</h1>
-      <p>Publica vacantes para personas adultas mayores. Los campos con * son obligatorios.</p>
+      <h1 className="titulo-centrado">Registro de Empresa</h1>
 
       <form className="formulario" onSubmit={enviar} noValidate>
-        <fieldset className="panel">
-          <legend>1. Datos de la empresa</legend>
-          <Campo id="nombre" etiqueta="Nombre de la empresa" obligatorio autoComplete="organization"
+        <fieldset className="seccion-form">
+          <legend>1. Datos de empresa</legend>
+          <p className="nota">* Campo obligatorio</p>
+          <Campo id="nombre" etiqueta="Nombre de empresa" obligatorio autoComplete="organization" placeholder="Nombre empresa"
             value={datos.nombre} onChange={cambiar} error={errores.nombre} />
-          <Campo id="giro" etiqueta="Giro" obligatorio ayuda="Ejemplo: restaurante, comercio, manufactura."
+          <Campo id="giro" etiqueta="Giro" obligatorio placeholder="Ej. restaurante, comercio"
             value={datos.giro} onChange={cambiar} error={errores.giro} />
           <Campo id="telefono" etiqueta="Teléfono" obligatorio type="tel" autoComplete="tel" inputMode="numeric"
-            ayuda="10 dígitos."
+            placeholder="10 dígitos"
             value={datos.telefono} onChange={cambiar} error={errores.telefono} />
         </fieldset>
 
-        <fieldset className="panel">
+        <fieldset className="seccion-form">
           <legend>2. Datos de acceso</legend>
-          <Campo id="correo" etiqueta="Correo electrónico" obligatorio type="email" autoComplete="email"
+          <Campo id="correo" etiqueta="Correo electrónico" obligatorio type="email" autoComplete="email" placeholder="ejemplo@mail.com"
             value={datos.correo} onChange={cambiar} error={errores.correo} />
           <Campo id="contrasena" etiqueta="Contraseña" obligatorio type="password" autoComplete="new-password"
-            ayuda={`Mínimo ${MIN_CONTRASENA} caracteres.`}
+            placeholder={`Mínimo ${MIN_CONTRASENA} caracteres`}
             value={datos.contrasena} onChange={cambiar} error={errores.contrasena} />
-          <Campo id="confirmar" etiqueta="Confirmar contraseña" obligatorio type="password" autoComplete="new-password"
+          <Campo id="confirmar" etiqueta="Confirmar contraseña" obligatorio type="password" autoComplete="new-password" placeholder="Repite tu contraseña"
             value={datos.confirmar} onChange={cambiar} error={errores.confirmar} />
         </fieldset>
 
         <Mensaje tipo="error">{mensaje}</Mensaje>
-        <button type="submit" className="boton boton-naranja" disabled={enviando}>
-          {enviando ? 'Registrando…' : 'Registrar empresa'}
+        <button type="submit" className="boton boton-naranja boton-pildora" disabled={enviando}>
+          {enviando ? 'Registrando…' : 'Crear mi cuenta'}
         </button>
         <Link className="boton boton-texto" to="/login">¿Ya tienes cuenta? Inicia sesión</Link>
       </form>

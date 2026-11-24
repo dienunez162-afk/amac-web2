@@ -4,9 +4,10 @@ import { useCallback, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
-import { fecha } from '../lib/formato'
 import EtiquetaEstatus from '../components/EtiquetaEstatus'
 import Mensaje from '../components/Mensaje'
+import Prospecto from '../components/Prospecto'
+import Icono from '../components/Icono'
 
 // Botones de estatus que la empresa puede elegir (deben coincidir con la política RLS)
 const OPCIONES = [
@@ -70,38 +71,40 @@ export default function SolicitudesRecibidas() {
 
   return (
     <>
-      <p><Link to="/empresa/vacantes">← Volver a mis vacantes</Link></p>
-      <h1>Solicitudes: {vacante.titulo}</h1>
-      <p><EtiquetaEstatus estatus={vacante.estado} /> {solicitudes.length} {solicitudes.length === 1 ? 'solicitud' : 'solicitudes'}</p>
+      <div className="barra-titulo sangrado">
+        <div>
+          <h1>Solicitudes:</h1>
+          <p>{vacante.titulo} · <EtiquetaEstatus estatus={vacante.estado} /></p>
+        </div>
+        <span className="avatar" aria-hidden="true"><Icono nombre="usuario" tamano={26} /></span>
+      </div>
 
-      {mensaje && <Mensaje tipo={mensaje.tipo}>{mensaje.texto}</Mensaje>}
+      <div className="detalle">
+        <Link className="volver" to="/empresa/vacantes">← Volver a mis vacantes</Link>
+        <h2 className="subtitulo">Prospectos ({solicitudes.length})</h2>
 
-      {solicitudes.length === 0 && <p className="vacio">Aún no hay solicitudes para esta vacante.</p>}
+        {mensaje && <Mensaje tipo={mensaje.tipo}>{mensaje.texto}</Mensaje>}
+        {solicitudes.length === 0 && <p className="vacio">Aún no hay solicitudes para esta vacante.</p>}
 
-      {solicitudes.map(s => (
-        <article className="prospecto" key={s.id} aria-labelledby={`candidato-${s.id}`}>
-          <h2 id={`candidato-${s.id}`}>{s.candidato?.nombre ?? 'Candidato'}</h2>
-          <p><EtiquetaEstatus estatus={s.estatus} /> <span className="hora">Aplicó el {fecha(s.creada_en)}</span></p>
-          <p><strong>Edad:</strong> {s.candidato?.edad ? `${s.candidato.edad} años` : 'No indicada'}</p>
-          <p><strong>Colonia:</strong> {s.candidato?.colonia || 'No indicada'}</p>
-          <p className="texto-multilinea"><strong>Experiencia:</strong> {s.candidato?.experiencia || 'No indicada'}</p>
-
-          <div className="acciones" role="group" aria-label={`Cambiar estatus de ${s.candidato?.nombre ?? 'la solicitud'}`}>
-            {OPCIONES.map(o => (
-              <button
-                key={o.estatus}
-                type="button"
-                className={o.estatus === 'Aceptada' ? 'boton boton-naranja' : 'boton boton-borde'}
-                onClick={() => cambiarEstatus(s, o.estatus)}
-                disabled={s.estatus === o.estatus}
-                aria-pressed={s.estatus === o.estatus}
-              >
-                {o.texto}
-              </button>
-            ))}
-          </div>
-        </article>
-      ))}
+        {solicitudes.map(s => (
+          <Prospecto key={s.id} solicitud={s} nivel="h3">
+            <div className="acciones" role="group" aria-label={`Cambiar estatus de ${s.candidato?.nombre ?? 'la solicitud'}`}>
+              {OPCIONES.map(o => (
+                <button
+                  key={o.estatus}
+                  type="button"
+                  className={o.estatus === 'Aceptada' ? 'boton boton-naranja' : 'boton boton-borde'}
+                  onClick={() => cambiarEstatus(s, o.estatus)}
+                  disabled={s.estatus === o.estatus}
+                  aria-pressed={s.estatus === o.estatus}
+                >
+                  {o.texto}
+                </button>
+              ))}
+            </div>
+          </Prospecto>
+        ))}
+      </div>
     </>
   )
 }
