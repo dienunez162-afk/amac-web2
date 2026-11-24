@@ -3,6 +3,7 @@ import Encabezado from './components/Encabezado'
 import Pie from './components/Pie'
 import RutaProtegida from './components/RutaProtegida'
 import NoEncontrada from './pages/NoEncontrada'
+import ListadoVacantes from './pages/ListadoVacantes'
 
 // TEMPORAL (Paso 3): marcador para las páginas que se construyen en los Pasos 4 y 5.
 function EnConstruccion({ titulo }) {
@@ -21,7 +22,7 @@ export default function App() {
       <main id="principal" className="principal contenedor">
         <Routes>
           {/* Públicas */}
-          <Route path="/" element={<EnConstruccion titulo="Empleos para ti" />} />
+          <Route path="/" element={<ListadoVacantes />} />
           <Route path="/vacantes/:id" element={<EnConstruccion titulo="Detalle de vacante" />} />
           <Route path="/login" element={<EnConstruccion titulo="Iniciar sesión" />} />
           <Route path="/registro" element={<EnConstruccion titulo="Crear cuenta de candidato" />} />
