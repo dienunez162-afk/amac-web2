@@ -22,9 +22,11 @@ export default function Encabezado() {
   const { perfil, cerrarSesion } = useAuth()
   const navigate = useNavigate()
 
+  // RF-009: primero ir al inicio y luego cerrar sesión
+  // (si se cierra primero, la ruta protegida actual mandaría a /login)
   async function salir() {
-    await cerrarSesion()
     navigate('/')
+    await cerrarSesion()
   }
 
   return (
