@@ -1,7 +1,7 @@
 // Inicio de sesión (RF-008). Con credenciales inválidas se muestra un mensaje genérico
 // (no se dice si falló el correo o la contraseña).
 import { useState } from 'react'
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useLocation } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
 import Campo from '../components/Campo'
@@ -12,7 +12,6 @@ const inicioPorRol = rol => (rol === 'empresa' ? '/empresa/vacantes' : '/')
 
 export default function Login() {
   const { perfil } = useAuth()
-  const navigate = useNavigate()
   const ubicacion = useLocation()
   const desde = ubicacion.state?.desde // página protegida que intentó abrir
 
@@ -21,8 +20,9 @@ export default function Login() {
   const [mensaje, setMensaje] = useState('')
   const [enviando, setEnviando] = useState(false)
 
-  // Si ya hay sesión, no tiene sentido mostrar el formulario
-  if (perfil && !enviando) return <Navigate to={inicioPorRol(perfil.rol)} replace />
+  // Cuando hay sesión (ya existía o se acaba de iniciar), AuthContext carga el perfil
+  // y desde aquí se manda a cada rol a su página (o a la página protegida que quería abrir)
+  if (perfil) return <Navigate to={desde ?? inicioPorRol(perfil.rol)} replace />
 
   async function entrar(e) {
     e.preventDefault()
@@ -33,19 +33,15 @@ export default function Login() {
     }
 
     setEnviando(true)
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email: correo.trim(),
       password: contrasena,
     })
     if (error) {
       setEnviando(false)
       setMensaje('Correo o contraseña incorrectos.') // genérico a propósito
-      return
     }
-
-    const { data: miPerfil } = await supabase.from('perfiles').select('rol').eq('id', data.user.id).single()
-    setEnviando(false)
-    navigate(desde ?? inicioPorRol(miPerfil?.rol), { replace: true })
+    // Si no hubo error, el botón sigue en "Entrando…" hasta que llega el perfil y se redirige
   }
 
   return (
