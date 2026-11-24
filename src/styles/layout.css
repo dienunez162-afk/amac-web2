@@ -4,45 +4,36 @@
   margin-inline: auto;
 }
 
-/* encabezado */
+/* franja de ancho completo dentro del contenedor (hero, barra de título, filtros, banner) */
+.sangrado {
+  margin-inline: calc(50% - 50vw);
+  padding-inline: calc(50vw - 50% + 1rem);
+}
+
+/* ===== ENCABEZADO: franja azul con el logo centrado ===== */
 .encabezado {
   background-color: var(--azul);
   color: var(--blanco);
-  padding-block: var(--espacio-s);
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 
-.encabezado a {
-  color: var(--blanco);
-}
-
-.fila {
+.encabezado .fila {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-  gap: var(--espacio-m);
+  min-height: 3.5rem;
+  padding-block: 0.4rem;
 }
 
 .logo img {
   display: block;
-  height: 38px;
+  height: 40px;
   width: auto;
 }
 
-.ayuda {
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
-  border: 2px solid white;
-  border-radius: 30px;
-  padding: 0.5rem 1rem;
-  font-size: var(--texto-sm);
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-}
-
-/* navegación para móvil (abajo de la pantalla) */
+/* ===== NAVEGACIÓN: barra blanca fija abajo en celular ===== */
 .menu {
   position: fixed;
   bottom: 0;
@@ -50,89 +41,130 @@
   right: 0;
   background-color: white;
   border-top: 1px solid var(--borde);
+  box-shadow: 0 -2px 8px rgba(32, 41, 69, 0.06);
   z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .menu ul {
   display: flex;
   list-style: none;
-  padding: 0;
-  margin: 0;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .menu li {
   flex: 1;
 }
 
-.menu a {
+.menu a,
+.menu button {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  gap: 0.25rem;
+  width: 100%;
+  min-height: 4.25rem;
   padding: 0.5rem 0.25rem;
-  min-height: 3.5rem;
+  font-family: inherit;
   font-size: 0.875rem;
-  font-weight: bold;
+  font-weight: 500;
   color: var(--azul);
   text-decoration: none;
   white-space: nowrap;
+  background: none;
+  border: 0;
+  cursor: pointer;
 }
 
-.menu img {
-  display: block;
-  width: 24px;
-  height: 24px;
-  margin-bottom: 0.2rem;
+.menu svg {
+  width: 26px;
+  height: 26px;
 }
 
+/* sección actual: ícono naranja y texto en negrita */
 .menu a.actual {
-  color: var(--naranja-texto);
-  text-decoration: underline;
+  font-weight: 700;
 }
 
-/* banner superior */
-.titulo-azul,
-.banner {
+.menu a.actual svg {
+  color: var(--naranja);
+}
+
+/* ===== CONTENIDO ===== */
+.principal {
+  padding-top: 1.5rem;
+  padding-bottom: 2.5rem;
+  min-height: 60vh;
+}
+
+/* hero azul "Empleos para ti" */
+.hero {
   background-color: var(--azul);
   color: white;
-  text-align: center;
-  padding: var(--espacio-l) var(--espacio-m);
+  margin-top: -1.5rem;
+  padding-block: 0.5rem 1.75rem;
 }
 
-.titulo-azul h1,
-.banner h1 {
-  font-size: var(--texto-h1);
-  margin-bottom: var(--espacio-s);
+.hero h1 {
   color: white;
+  font-size: 2.1rem;
 }
 
-.titulo-azul p {
-  font-size: var(--texto-base);
-  opacity: 0.9;
-  margin: 0;
+.hero p {
+  color: #dfe3ee;
+  margin-top: 0.4rem;
 }
 
-/* contenido principal */
-.principal {
-  padding-block: var(--espacio-l);
+/* barra blanca de título: "Mis solicitudes:", "Mis vacantes:" */
+.barra-titulo {
+  background-color: white;
+  box-shadow: var(--sombra-barra);
+  margin-top: -1.5rem;
+  margin-bottom: 1.75rem;
+  padding-block: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-m);
 }
 
-/* lista de tarjetas: 1 columna en móvil */
+.barra-titulo h1 {
+  font-size: 1.5rem;
+}
+
+.barra-titulo p {
+  color: var(--gris-texto);
+  font-size: var(--texto-sm);
+}
+
+.avatar {
+  flex: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.6rem;
+  background-color: var(--celeste);
+  color: var(--azul);
+  display: grid;
+  place-items: center;
+}
+
+/* lista de tarjetas: 1 columna en celular */
 .lista {
   list-style: none;
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--espacio-l);
+  gap: 1.5rem;
 }
 
-/* footer */
+/* ===== PIE ===== */
 .pie {
   background-color: var(--azul);
   color: white;
   padding-block: var(--espacio-l);
-  margin-top: var(--espacio-l);
-  margin-bottom: 4.5rem; /* espacio para el menú fijo de abajo */
+  margin-bottom: 4.5rem; /* espacio para la navegación fija de abajo */
+  font-size: var(--texto-sm);
 }
 
 .pie p {
@@ -147,7 +179,7 @@
 .pie-enlaces {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--espacio-m);
+  gap: var(--espacio-m) var(--espacio-l);
   margin-top: var(--espacio-m);
 }
 
@@ -156,45 +188,66 @@
   padding: 0.4rem 0;
 }
 
-/* tablet */
+/* ===== TABLET Y ESCRITORIO ===== */
 @media (min-width: 768px) {
   .pie {
     margin-bottom: 0;
   }
 
-  /* el menú sube al header */
+  /* el logo se va a la izquierda y la navegación sube al encabezado */
+  .encabezado .fila {
+    justify-content: space-between;
+  }
+
   .menu {
     position: static;
     background: transparent;
     border-top: none;
+    box-shadow: none;
+    padding: 0;
   }
 
   .menu ul {
-    gap: var(--espacio-s);
+    gap: 0.25rem;
+    max-width: none;
   }
 
-  .menu a {
-    color: white;
-    font-size: var(--texto-base);
-    padding: 0.5rem 1rem;
-    min-height: 44px;
+  .menu a,
+  .menu button {
     flex-direction: row;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.5rem 1rem;
+    color: white;
+    font-size: 1rem;
+    border-radius: var(--radio-boton);
   }
 
-  /* se ocultan los íconos sobre el fondo azul */
-  .menu img {
-    display: none;
+  .menu svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .menu a:hover,
+  .menu button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
   }
 
   .menu a.actual {
     background-color: var(--naranja);
     color: var(--azul);
-    border-radius: var(--radio);
-    text-decoration: none;
   }
 
-  .fila {
-    flex-wrap: nowrap;
+  .menu a.actual svg {
+    color: var(--azul);
+  }
+
+  .hero {
+    padding-block: 2rem 2.5rem;
+  }
+
+  .hero h1 {
+    font-size: 2.6rem;
   }
 
   .lista {
@@ -202,7 +255,6 @@
   }
 }
 
-/* escritorio */
 @media (min-width: 1024px) {
   .lista {
     grid-template-columns: repeat(3, 1fr);

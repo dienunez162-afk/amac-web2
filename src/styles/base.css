@@ -16,13 +16,20 @@ body {
   color: var(--azul);
   background-color: var(--gris-fondo);
   line-height: 1.5;
+  overflow-x: clip; /* las franjas de ancho completo no generan scroll horizontal */
 }
 
-/* títulos con Baskervville */
+/* títulos en Work Sans negrita, como en el prototipo */
 h1, h2, h3, h4 {
   font-family: var(--fuente-titulos);
+  font-weight: 800;
   line-height: 1.2;
+  color: var(--azul);
 }
+
+h1 { font-size: var(--texto-h1); }
+h2 { font-size: var(--texto-h2); }
+h3 { font-size: var(--texto-h3); }
 
 /* foco visible: contorno azul con anillo blanco */
 :focus-visible {
@@ -51,6 +58,19 @@ h1, h2, h3, h4 {
   background-color: white;
   border: 2px solid var(--azul);
   z-index: 9999;
+}
+
+/* texto solo para lectores de pantalla */
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 a {
