@@ -1,21 +1,52 @@
 import { Routes, Route } from 'react-router-dom'
+import Encabezado from './components/Encabezado'
+import Pie from './components/Pie'
+import RutaProtegida from './components/RutaProtegida'
+import NoEncontrada from './pages/NoEncontrada'
 
-// Página temporal del Paso 1: se reemplaza por las páginas reales en los siguientes pasos.
-function Inicio() {
+// TEMPORAL (Paso 3): marcador para las páginas que se construyen en los Pasos 4 y 5.
+function EnConstruccion({ titulo }) {
   return (
     <>
-      <h1>AMAC en React</h1>
-      <p>El proyecto React está funcionando.</p>
+      <h1>{titulo}</h1>
+      <p role="status">Esta página está en construcción.</p>
     </>
   )
 }
 
 export default function App() {
   return (
-    <main id="principal" className="principal contenedor">
-      <Routes>
-        <Route path="/" element={<Inicio />} />
-      </Routes>
-    </main>
+    <>
+      <Encabezado />
+      <main id="principal" className="principal contenedor">
+        <Routes>
+          {/* Públicas */}
+          <Route path="/" element={<EnConstruccion titulo="Empleos para ti" />} />
+          <Route path="/vacantes/:id" element={<EnConstruccion titulo="Detalle de vacante" />} />
+          <Route path="/login" element={<EnConstruccion titulo="Iniciar sesión" />} />
+          <Route path="/registro" element={<EnConstruccion titulo="Crear cuenta de candidato" />} />
+          <Route path="/registro-empresa" element={<EnConstruccion titulo="Registrar mi empresa" />} />
+
+          {/* Solo candidatos (RF-010) */}
+          <Route path="/mis-solicitudes" element={
+            <RutaProtegida rol="candidato"><EnConstruccion titulo="Mis solicitudes" /></RutaProtegida>
+          } />
+
+          {/* Solo empresas (RF-010) */}
+          <Route path="/empresa/vacantes" element={
+            <RutaProtegida rol="empresa"><EnConstruccion titulo="Mis vacantes" /></RutaProtegida>
+          } />
+          <Route path="/empresa/publicar" element={
+            <RutaProtegida rol="empresa"><EnConstruccion titulo="Publicar vacante" /></RutaProtegida>
+          } />
+          <Route path="/empresa/vacantes/:id/solicitudes" element={
+            <RutaProtegida rol="empresa"><EnConstruccion titulo="Solicitudes recibidas" /></RutaProtegida>
+          } />
+
+          <Route path="*" element={<NoEncontrada />} />
+        </Routes>
+      </main>
+      <Pie />
+    </>
   )
 }
