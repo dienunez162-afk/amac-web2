@@ -4,7 +4,7 @@ Proyecto final OT2026-WEB · **Entrega 3: React + Supabase + Vercel**
 
 - **Aplicación publicada:** https://amac-web2.vercel.app
 - **Repositorio:** https://github.com/dienunez162-afk/amac-web2
-- **Video de la presentación:** _(agregar enlace)_
+- **Video de la presentación:** https://drive.google.com/drive/folders/1xQrQZuDfPjZ8vY_sx0-8kSExnVeSfBVy?usp=sharing
 - **Diapositivas:** _(agregar enlace o PDF)_
 
 AMAC conecta a personas adultas mayores que buscan empleo con empresas que quieren contratarlas. El candidato busca vacantes, se postula y sigue el estatus de sus solicitudes; la empresa publica vacantes y gestiona a sus prospectos; AMAC aprueba a los candidatos antes de que puedan postularse.
